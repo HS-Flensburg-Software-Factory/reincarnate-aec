@@ -19,7 +19,6 @@
   <script src='viz-2D.js'></script>
   <script src='viz-3D.js'></script>
   <script src='viz-anyD.js'></script>
-  <script src='zarith-stubs.js'></script>
   <script src='JSLib.js'></script>
   <script src='main.js'></script>
   <link rel='stylesheet' type='text/css' href='style.css' />
@@ -33,10 +32,10 @@
     <li id='nav-mesh' onclick='view("mesh")'>
       Mesh</li>
     <li id='nav-slicer' onclick='view("slicer")'>
-      Slicer</li>
-    <li id='nav-tp' onclick='view("tp")'>
+      STL</li>
+    <li id='nav-tp' onclick='view("tp")' class="invis">
       ToolPath</li>
-    <li id='nav-gcode' onclick='view("gcode")'>
+    <li id='nav-gcode' onclick='view("gcode")' class="invis">
       GCode</li>
     <li id='nav-log' onclick='view("log")'>
       Settings</li>
@@ -55,7 +54,7 @@
             onchange='upload("lc")' />
           <button onclick='download("lc")'>
             Download</button>
-          <input id='lc-download' />
+          <input id='lc-download' placeholder="Filename" />
         </div>
       </div>
       <div class='main'>
@@ -75,7 +74,7 @@
             onchange='upload("cad")' />
           <button onclick='download("cad")'>
             Download</button>
-          <input id='cad-download' />
+          <input id='cad-download' placeholder="Filename" />
         </div>
       </div>
       <div class='main'>
@@ -99,7 +98,7 @@
             onchange='upload("mesh")' />
           <button onclick='download("mesh")'>
             Download</button>
-          <input id='mesh-download' />
+          <input id='mesh-download' placeholder="Filename" />
         </div>
       </div>
       <div class='main'>
@@ -118,17 +117,13 @@
 
     <div id='slicer'>
       <div class='controls'>
-        <button onclick='compile("slicer")'>
+        <button onclick='alert("TODO")'>
           Compile</button>
 
         <div class='flr'>
-          <button onclick='upload_aux("slicer")'>
-            Upload</button>
-          <input id='slicer-upload' class='invis' type='file'
-            onchange='upload("slicer")' />
           <button onclick='download("slicer")'>
             Download</button>
-          <input id='slicer-download' />
+          <input id='slicer-download' placeholder="Filename" />
         </div>
       </div>
       <div class='main'>
