@@ -11,25 +11,25 @@ end
 
 let alert msg =
   msg |> String.escaped
-      |> Printf.sprintf "alert(\"%s\")"
+      |> Printf.sprintf "window.alert(\"%s\")"
       |> Js.Unsafe.eval_string
       |> ignore
 
 let log msg =
   msg |> String.escaped
-      |> Printf.sprintf "ide_log(\"%s\")"
+      |> Printf.sprintf "window.ide_log(\"%s\")"
       |> Js.Unsafe.eval_string
       |> ignore
 
 let set_editor id s = ignore @@
   Js.Unsafe.eval_string @@
-    Printf.sprintf "editors[\"%s\"].setValue(\"%s\")"
+    Printf.sprintf "window.editors[\"%s\"].setValue(\"%s\")"
       (String.escaped id)
       (String.escaped s)
 
 let view id = ignore @@
   Js.Unsafe.eval_string @@
-    Printf.sprintf "view(\"%s\")" @@
+    Printf.sprintf "window.view(\"%s\")" @@
       String.escaped id
 
 let get_rand_seed s =
