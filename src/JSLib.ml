@@ -3,10 +3,55 @@ open Util
 module N = NumSys.FloatNum
 module G = Glue.DefaultGlue(N)
 
+let __prims1 = ref
+  [ ("segment", "Unit1()") ]
+
+let __prims2 = ref
+  [ ("square", "Unit2()")
+  ; ("circle", "circle 10")
+  ; ("house", "house 1 1.5")
+  ; ("eq_tri", "tri_eq 1")
+  ; ("iso_tri", "tri_iso 1 2")
+  ; ("tri", "tri 3 7 9")
+  ; ("rt_tri", "tri_rt 3 5")
+  ; ("para", "paragram_h 5 9 3")
+  ; ("trap", "trap_rt 7 5 3")
+  ; ("pgon_reg1", "pgon_reg_r 5 7")
+  ; ("pgon_reg2", "pgon_reg_r 7 11")
+  ]
+
+let __prims3 = ref
+  [ ("cube", "Unit")
+  ; ("sphere", "Sphere")
+  ; ("cylinder", "Cylinder")
+  ; ("pentagon", "Pentagon")
+  ; ("hexagon", "Hexagon")
+  ]
+
+(*
+TODO
+- timeouts
+- seeding
+- choice numsys, glue
+- configurable eps_abs, eps_rel, oprec, invariants, fuel
+*)
+
 let () = begin
-  G.set_eps_abs "1e-8";
-  G.set_eps_rel "1e-8";
-  G.set_oprec   "5";
+  G.set_eps_abs    "1e-8";
+  G.set_eps_rel    "1e-8";
+  G.set_oprec      "5";
+  G.set_fuel       5;
+  G.set_invariants false;
+
+  !__prims1
+    |> List.map (fun (x, y) -> (x, G.cad1_of_lc (G.lc_of_string y)))
+    |> G.set_prims1;
+  !__prims2
+    |> List.map (fun (x, y) -> (x, G.cad2_of_lc (G.lc_of_string y)))
+    |> G.set_prims2;
+  !__prims3
+    |> List.map (fun (x, y) -> (x, G.cad3_of_string y))
+    |> G.set_prims3;
 end
 
 let alert msg =
