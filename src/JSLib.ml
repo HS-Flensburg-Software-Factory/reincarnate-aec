@@ -86,6 +86,18 @@ let compile_cad s =
   view "mesh";
   "OK"
 
+let compile_mesh s =
+  let tgt =
+    try
+      s |> G.mesh3_of_string
+        |> G.stl_of_mesh3
+    with ParseCommon.Error msg ->
+      raise (ParseCommon.Error "Could not parse mesh3 as stl")
+  in
+  set_editor "slicer" tgt;
+  view "slicer";
+  "OK"
+
 let synth_cad s =
   let tgt =
     try
@@ -152,6 +164,7 @@ let _ =
   in
   List.iter register
     [ ("compile_lc",     compile_lc)
+    ; ("compile_mesh",   compile_mesh)
     ; ("compile_cad",    compile_cad)
     ; ("synth_cad",      synth_cad)
     ; ("get_rand_seed",  get_rand_seed)
