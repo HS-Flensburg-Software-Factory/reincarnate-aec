@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+
+  reincarnate:
+    image: local/reincarnate:latest
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped

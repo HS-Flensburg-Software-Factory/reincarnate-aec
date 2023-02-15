@@ -99,6 +99,25 @@ For the compiler experiments, we of course use the compiler that we have built. 
 
 Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated by the flag `--glue os-mesh`), and also disable our invariant (indicated by the flag `--no-invariants`) checks in order to avoid rounding errors. As we explained in Section `8.1` of the paper, rounding errors creep in very frequently in CAD compilation and as part of our future work, we have already started to work on ways to fix it (e.g. exact arithmetic). Since these numerical issues are still work in progress and not a contribution of this paper, for the purpose of demonstrating our synthesis tool, we leverage the fully functorial design of our tools and plug in the OpenSCAD compiler.
 
+### Docker instructions (for trying out ReIncarnate quickly)
+
+1. Build the image:
+```
+  $ docker-compose build
+```
+
+2. Start the container:
+```
+  $ docker-compose up -d
+```
+
+3. Access the container:
+```
+  $ docker-compose exec reincarnate bash
+```
+
+4. To use the web ide, go to http://localhost:3000
+
 ### Setup instructions (for setting up ReIncarnate in a different machine)
 
 1. Install system dependencies. On macOS with [Homebrew](https://brew.sh/):
