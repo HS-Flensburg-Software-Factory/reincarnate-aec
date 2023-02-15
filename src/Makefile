@@ -1,10 +1,13 @@
 JOBS ?= 1
+OCBFLAGS ?=
+JSCFLAGS ?=
 
 DEP = *.ml parsers/*.ml parsers/*.mll parsers/*.mly
-OCB = ocamlbuild -use-ocamlfind -j $(JOBS)
+OCB = ocamlbuild -use-ocamlfind -j $(JOBS) $(OCBFLAGS)
 
-# TODO use ocamlbuild for js_of_ocaml
-JSC = js_of_ocaml --disable genprim --pretty +weak.js
+ZSJ = zarith_stubs_js/caml_custom_ops.js zarith_stubs_js/runtime.js zarith_stubs_js/biginteger.js
+OJS = $(OCB) -plugin-tag "package(js_of_ocaml.ocamlbuild)"
+JSC = js_of_ocaml --disable genprim --pretty +weak.js $(JSCFLAGS) $(ZSJ)
 
 .PHONY: default
 default: Main.native
@@ -26,7 +29,16 @@ all: default ide Fuzz.native
 ## ide
 ##
 
-%.js: %.byte $(DEP)
+zarith_stubs_js: $(ZJS)
+	wget -q -P zarith_stubs_js/ \
+		https://raw.githubusercontent.com/janestreet/zarith_stubs_js/v0.12.0/runtime.js \
+		https://raw.githubusercontent.com/janestreet/zarith_stubs_js/v0.12.0/biginteger.js
+	printf '//Provides: caml_custom_ops\nvar caml_custom_ops = {};\n' > zarith_stubs_js/caml_custom_ops.js
+
+%.byte: %.ml $(DEP)
+	$(OJS) $@
+
+%.js: %.byte $(DEP) zarith_stubs_js
 	$(JSC) $<
 
 ide/JSLib.js: JSLib.js
@@ -49,5 +61,9 @@ clean:
 clean-tmp:
 	rm -rf tmp/*
 
+.PHONY: clean-ide
+clean-ide:
+	rm -rf zarith_stubs_js/
+
 .PHONY: clean-all
-clean-all: clean clean-doc clean-tmp
+clean-all: clean clean-ide clean-tmp

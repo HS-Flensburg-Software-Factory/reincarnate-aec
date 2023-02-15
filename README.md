@@ -126,7 +126,7 @@ On Linux (Ubuntu 18.04) with root and `apt`:
 ```
   $ opam init
   $ eval `opam config env`
-  $ opam install mlgmpidl zarith hashcons menhir js_of_ocaml
+  $ opam install mlgmpidl zarith hashcons menhir js_of_ocaml js_of_ocaml-ocamlbuild
 ```
 
 3. Run GNU parallel once interactively and acknowledge that you will cite the authors:
@@ -140,3 +140,8 @@ On Linux (Ubuntu 18.04) with root and `apt`:
   $ make
 ```
 
+5. Build the web IDE (will download two more files from GitHub):
+```
+  $ cd reincarnate/src
+  $ make ide
+```
